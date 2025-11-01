@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import ChangePasswordModal from "./ChangePasswordModal"; // 1. Import the new modal
+import ChangePasswordModal from "./ChangePasswordModal";
 
 const ChatPage = () => {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false); // 2. Add state for the modal
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
 
   const userRef = useRef(JSON.parse(localStorage.getItem("user")));
@@ -37,7 +37,6 @@ const ChatPage = () => {
   }, [navigate]);
 
   const handleSend = async () => {
-    // (Your existing handleSend logic... no changes needed here)
     if (!input.trim() || isLoading) return;
     const userMessage = { from: "user", text: input };
     setMessages((prev) => [...prev, userMessage]);
@@ -77,12 +76,11 @@ const ChatPage = () => {
   return (
     <>
       {" "}
-      {/* 3. Use a React Fragment to wrap everything */}
       <div className="chat-container">
         <header className="chat-header">
           <h1>Campus Copilot</h1>
           <p>Logged in as: {userRef.current.email}</p>
-          {/* 4. Add the new button to open the modal */}
+
           <button
             onClick={() => setIsModalOpen(true)}
             className="logout-button"
@@ -95,7 +93,6 @@ const ChatPage = () => {
           </button>
         </header>
         <div className="message-list">
-          {/* ... (your message mapping) ... */}
           {messages.map((msg, index) => (
             <div key={index} className={`message ${msg.from}`}>
               {msg.text}
@@ -107,7 +104,6 @@ const ChatPage = () => {
           <div ref={messagesEndRef} />
         </div>
         <div className="input-area">
-          {/* ... (your input form) ... */}
           <input
             type="text"
             value={input}
@@ -121,7 +117,7 @@ const ChatPage = () => {
           </button>
         </div>
       </div>
-      {/* 5. Conditionally render the modal */}
+      {}
       {isModalOpen && (
         <ChangePasswordModal onClose={() => setIsModalOpen(false)} />
       )}

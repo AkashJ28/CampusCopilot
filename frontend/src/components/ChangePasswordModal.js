@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-// This is the CSS class for the modal, we will add it to App.css
 const modalStyles = {
   overlay: {
     position: "fixed",
@@ -47,7 +46,6 @@ const ChangePasswordModal = ({ onClose }) => {
     setIsError(false);
     setMessage("");
 
-    // 1. Frontend Validation
     if (newPassword !== confirmNewPassword) {
       setMessage("New passwords do not match.");
       setIsError(true);
@@ -56,10 +54,8 @@ const ChangePasswordModal = ({ onClose }) => {
     }
 
     try {
-      // 2. Get the user's token from local storage
       const token = localStorage.getItem("token");
 
-      // 3. Make the authenticated API call
       const response = await axios.post(
         "http://localhost:3001/api/auth/change-password",
         {
@@ -69,19 +65,17 @@ const ChangePasswordModal = ({ onClose }) => {
         },
         {
           headers: {
-            Authorization: `Bearer ${token}`, // Include the JWT "VIP Pass"
+            Authorization: `Bearer ${token}`,
           },
         }
       );
 
-      // 4. Handle Success
       setMessage(response.data.message || "Password changed successfully!");
       setIsError(false);
       setOldPassword("");
       setNewPassword("");
       setConfirmNewPassword("");
     } catch (err) {
-      // 5. Handle Errors
       const errorMsg =
         err.response?.data?.error || "An unknown error occurred.";
       setMessage(errorMsg);
